@@ -1,0 +1,17 @@
+@mixin min-screen($res) {
+  @media screen and (min-width: $res) {
+    @content;
+  }
+}
+
+@mixin max-screen($res) {
+  @media screen and (max-width: $res) {
+    @content;
+  }
+}
+
+@mixin min-to-max-screen($res, $to-res) {
+  @media screen and (min-width: $res) and (max-width: $to-res) {
+    @content;
+  }
+}

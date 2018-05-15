@@ -1,0 +1,20 @@
+$mobile: 320px;
+$mobile--medium: 450px;
+$mobile--big: 520px;
+$tablet: 768px;
+$tablet--big: 1024px;
+$desktop: 1200px;
+$desktop--medium: 1400px;
+$desktop--full: 1920px;
+
+$container: 1400px;
+
+$breakpoints: (
+  'mobile' $mobile,
+  'tablet' $tablet,
+  'tablet--big' $tablet--big,
+  'desktop' $desktop,
+  'desktop--medium' $desktop--medium,
+  'desktop--full' $desktop--full,
+  'container' $container,
+);
