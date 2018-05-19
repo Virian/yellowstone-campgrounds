@@ -3,3 +3,5 @@
 /yarn.lock
 /build/
 /.idea/
+/front-end/config/firebase.config.json
+/front-end/config/campgrounds.json
