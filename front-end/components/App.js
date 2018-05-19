@@ -1,6 +1,7 @@
 import React from 'react';
 import RestClient from '../common/restClient';
 import Welcome from './welcome';
+import Calendar from './calendar'
 
 export default class App extends React.Component {
   componentDidMount() {
@@ -17,6 +18,7 @@ export default class App extends React.Component {
     return (
       <div>
         <Welcome/>
+        <Calendar/>
       </div>);
   }
 }
