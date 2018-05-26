@@ -5,3 +5,4 @@
 /.idea/
 /front-end/config/firebase.config.json
 /front-end/config/campgrounds.json
+/functions/node_modules/
