@@ -28,6 +28,7 @@ export default class Calendar extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
+    this.goToDate = this.goToDate.bind(this)
   }
 
   componentDidMount() {
@@ -92,6 +93,10 @@ export default class Calendar extends React.Component {
     })*/
   }
 
+  goToDate() {
+    this.initFillTimes()
+  }
+
   render() {
     const { fillTimes, days } = this.state
     return (
@@ -109,7 +114,7 @@ export default class Calendar extends React.Component {
             dropdownMode="select"
             todayButton={'Today'}
           />
-          <span className="btn btn-primary btn-select-date">Go to selected date</span>
+          <span className="btn btn-primary btn-select-date" onClick={this.goToDate}>Go to selected date</span>
         </div>
         <div className="row">
           <ul className="camp-names">
