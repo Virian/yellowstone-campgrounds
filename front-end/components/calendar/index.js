@@ -1,6 +1,5 @@
 import React from 'react'
 import DatePicker from 'react-datepicker'
-// import moment from 'moment'
 import * as firebase from 'firebase'
 import FirebaseConfig from '../../config/firebase.config.json'
 import Campgrounds from '../../config/campgrounds.json'
@@ -91,37 +90,15 @@ export default class Calendar extends React.Component {
     this.db.collection('test_camp').add({
       date: moment('2016-06-21T14:51:00Z').unix()
     })*/
-    /*Campgrounds.map((campground, idx) => {
-      const batch = this.db.batch()
-      const campgroundsRef = this.db.collection('campgrounds')
-      axios.get('https://nps-yell.cartodb.com/api/v2/sql', {
-        params: {
-          cb: new Date().getTime(),
-          q: 'SELECT * FROM campgrounds_and_lodging_status x WHERE x.npmap_id=\'' + campground.npmap_id + '\''
-        }
-      }).then(response => {
-        // console.log(response)
-        response.data.rows.map(row => {
-          const newRow = campgroundsRef.doc()
-          batch.set(newRow, {
-            id: row.npmap_id,
-            fillTime: moment(row.fill_datetime).unix(),
-            name: campground.name,
-            isClosed: row.is_closed
-          })
-        })
-        batch.commit().then(() => console.log('commited ' + idx))
-      })
-    })*/
   }
 
   render() {
     const { fillTimes, days } = this.state
     return (
       <div className="calendar container">
-        {/*<div className="row">
+        <div className="row">
           <span className="btn btn-primary btn-select-date" onClick={this.handleClick}>Test!</span>
-        </div>*/}
+        </div>
         <div className="datepicker row">
           <DatePicker
             selected={this.state.startDate}
