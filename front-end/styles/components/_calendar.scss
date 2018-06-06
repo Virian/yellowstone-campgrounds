@@ -12,48 +12,7 @@
     margin-left: 10px;
   }
 
-  .camp-names {
-    float: left;
-    width: 120px;
-    margin-top: 50px;
-
-    .campground-name {
-      display: flex;
-      width: 120px;
-      min-height: 50px;
-      border: 1px solid black;
-      align-items: center;
-      text-align: center;
-    }
-  }
-
-  .camp-fill-times-wrapper {
-    float: left;
-    width: calc(100% - 120px);
-    height: 650px;
+  .table-container {
     margin-bottom: 30px;
-
-    .camp-fill-times {
-      height: 100%;
-      overflow-x: auto;
-      white-space: nowrap;
-
-      .fill-times-day-column {
-        display: inline-block;
-        height: 100%;
-        width: 80px;
-
-        .fill-time {
-          display: flex;
-          align-items: center;
-          width: 100%;
-          min-height: 50px;
-          border: 1px solid black;
-          text-align: center;
-          justify-content: center;
-          white-space: normal;
-        }
-      }
-    }
   }
 }

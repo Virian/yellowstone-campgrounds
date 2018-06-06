@@ -4,6 +4,11 @@ import * as firebase from 'firebase'
 import FirebaseConfig from '../../config/firebase.config.json'
 import Campgrounds from '../../config/campgrounds.json'
 import moment from 'moment-timezone'
+import Table from '@material-ui/core/Table'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
+import TableCell from '@material-ui/core/TableCell'
+import TableBody from '@material-ui/core/TableBody'
 import axios from 'axios'
 
 import 'react-datepicker/dist/react-datepicker.css'
@@ -119,44 +124,41 @@ export default class Calendar extends React.Component {
           />
           <span className="btn btn-primary btn-select-date" onClick={this.goToDate}>Go to selected date</span>
         </div>
-        <div className="row">
-          <ul className="camp-names">
-            {
-              Campgrounds.map(campground => {
-                return (
-                  <li className="campground-name" key={campground.npmap_id}>
-                    {campground.name}
-                  </li>
-                )
-              })
-            }
-          </ul>
-          <div className="camp-fill-times-wrapper">
-            <div className="camp-fill-times">
+        <div className="row table-container">
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Campground</TableCell>
+                {
+                  days.map((day) => {
+                    return (
+                      <TableCell key={day + '_col'}>{day}</TableCell>
+                    )
+                  })
+                }
+              </TableRow>
+            </TableHead>
+            <TableBody>
               {
-                days.map(day => {
+                Campgrounds.map(campground => {
                   return (
-                    <ul className="fill-times-day-column" key={day + '_col'}>
-                      <li className="fill-time" key={day}>
-                        {day}
-                      </li>
+                    <TableRow key={campground.npmap_id}>
+                      <TableCell>{campground.name}</TableCell>
                       {
-                        Campgrounds.map((campground) => {
+                        days.map(day => {
                           return (
-                            <li className="fill-time" key={day + campground.npmap_id}>
-                              {
-                                fillTimes[day] && fillTimes[day][campground.npmap_id] ? fillTimes[day][campground.npmap_id] : '-'
-                              }
-                            </li>
+                            <TableCell>
+                              {fillTimes[day] && fillTimes[day][campground.npmap_id] ? fillTimes[day][campground.npmap_id] : '-'}
+                            </TableCell>
                           )
                         })
                       }
-                    </ul>
+                    </TableRow>
                   )
                 })
               }
-            </div>
-          </div>
+            </TableBody>
+          </Table>
         </div>
       </div>
     )
