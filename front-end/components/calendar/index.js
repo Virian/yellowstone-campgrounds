@@ -29,6 +29,13 @@ export default class Calendar extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.goToDate = this.goToDate.bind(this)
+    this.findFillTime = this.findFillTime.bind(this)
+  }
+
+  findFillTime(day, campground) {
+    return this.state.fillTimes.find((time) => {
+      return time.fillTime.format('DD MMM YYYY') === day && time.id === campground.npmap_id
+    })
   }
 
   componentDidMount() {
@@ -39,7 +46,7 @@ export default class Calendar extends React.Component {
     const earliestDate = moment(this.state.startDate).startOf('isoWeek').startOf('day')
     const latestDate = moment(this.state.startDate).endOf('isoWeek').endOf('day')
     let dateIterator = moment(earliestDate)
-    let fillTimes = {}
+    let fillTimes = []
     let days = []
 
     while (latestDate.isAfter(dateIterator, 'day') || latestDate.isSame(dateIterator, 'day')) {
@@ -51,11 +58,17 @@ export default class Calendar extends React.Component {
       .get()
       .then(snapshot => {
         snapshot.forEach(doc => {
+          /*console.log(doc.data());
           const fillTime = moment.unix(doc.data().fillTime).tz('America/Denver')
           let campgroundFillTime = {}
           campgroundFillTime[doc.data().id] = fillTime.format('hh:mm A')
-          fillTimes[fillTime.format('DD MMM YYYY')] = campgroundFillTime
+          fillTimes[fillTime.format('DD MMM YYYY')] = campgroundFillTime*/
+          fillTimes.push({
+            id: doc.data().id,
+            fillTime: moment.unix(doc.data().fillTime).tz('America/Denver')
+          })
         })
+        console.log(fillTimes);
         this.setState({
           fillTimes: fillTimes,
           earliestDate: earliestDate,
@@ -101,9 +114,9 @@ export default class Calendar extends React.Component {
     const { fillTimes, days } = this.state
     return (
       <div className="calendar container">
-        <div className="row">
+        {/*<div className="row">
           <span className="btn btn-primary btn-select-date" onClick={this.handleClick}>Test!</span>
-        </div>
+        </div>*/}
         <div className="datepicker row">
           <DatePicker
             selected={this.state.startDate}
@@ -142,7 +155,7 @@ export default class Calendar extends React.Component {
                           return (
                             <li className="fill-time" key={day + campground.npmap_id}>
                               {
-                                fillTimes[day] && fillTimes[day][campground.npmap_id] ? fillTimes[day][campground.npmap_id] : '-'
+                                this.findFillTime(day, campground) ? this.findFillTime(day, campground).fillTime.format('hh:mm A') : '-'
                               }
                             </li>
                           )
