@@ -4,6 +4,7 @@ import * as firebase from 'firebase'
 import FirebaseConfig from '../../config/firebase.config.json'
 import Campgrounds from '../../config/campgrounds.json'
 import moment from 'moment-timezone'
+import Button from '@material-ui/core/Button'
 import Table from '@material-ui/core/Table'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
@@ -122,7 +123,7 @@ export default class Calendar extends React.Component {
             dropdownMode="select"
             todayButton={'Today'}
           />
-          <span className="btn btn-primary btn-select-date" onClick={this.goToDate}>Go to selected date</span>
+          <Button variant="contained" color="primary" className="btn-select-date" onClick={this.goToDate}>Go to selected date</Button>
         </div>
         <div className="row table-container">
           <Table>
