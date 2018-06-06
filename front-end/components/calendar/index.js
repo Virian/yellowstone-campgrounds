@@ -29,13 +29,6 @@ export default class Calendar extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.goToDate = this.goToDate.bind(this)
-    this.findFillTime = this.findFillTime.bind(this)
-  }
-
-  findFillTime(day, campground) {
-    return this.state.fillTimes.find((time) => {
-      return time.fillTime.format('DD MMM YYYY') === day && time.id === campground.npmap_id
-    })
   }
 
   componentDidMount() {
@@ -117,6 +110,8 @@ export default class Calendar extends React.Component {
             selected={this.state.startDate}
             onChange={this.handleChange}
             maxDate={moment().tz('America/Denver')}
+            minDate={moment().year(2015).startOf('year')}
+            locale="en-gb"
             showMonthDropdown
             showYearDropdown
             dropdownMode="select"
