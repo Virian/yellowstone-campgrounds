@@ -46,7 +46,7 @@ export default class Calendar extends React.Component {
     const earliestDate = moment(this.state.startDate).startOf('isoWeek').startOf('day')
     const latestDate = moment(this.state.startDate).endOf('isoWeek').endOf('day')
     let dateIterator = moment(earliestDate)
-    let fillTimes = []
+    let fillTimes = {}
     let days = []
 
     while (latestDate.isAfter(dateIterator, 'day') || latestDate.isSame(dateIterator, 'day')) {
@@ -58,17 +58,12 @@ export default class Calendar extends React.Component {
       .get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          /*console.log(doc.data());
           const fillTime = moment.unix(doc.data().fillTime).tz('America/Denver')
           let campgroundFillTime = {}
           campgroundFillTime[doc.data().id] = fillTime.format('hh:mm A')
-          fillTimes[fillTime.format('DD MMM YYYY')] = campgroundFillTime*/
-          fillTimes.push({
-            id: doc.data().id,
-            fillTime: moment.unix(doc.data().fillTime).tz('America/Denver')
-          })
+          fillTimes[fillTime.format('DD MMM YYYY')] = fillTimes[fillTime.format('DD MMM YYYY')] || {}
+          fillTimes[fillTime.format('DD MMM YYYY')][doc.data().id] = fillTime.format('hh:mm A')
         })
-        console.log(fillTimes);
         this.setState({
           fillTimes: fillTimes,
           earliestDate: earliestDate,
@@ -155,7 +150,7 @@ export default class Calendar extends React.Component {
                           return (
                             <li className="fill-time" key={day + campground.npmap_id}>
                               {
-                                this.findFillTime(day, campground) ? this.findFillTime(day, campground).fillTime.format('hh:mm A') : '-'
+                                fillTimes[day] && fillTimes[day][campground.npmap_id] ? fillTimes[day][campground.npmap_id] : '-'
                               }
                             </li>
                           )
