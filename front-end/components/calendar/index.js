@@ -10,12 +10,9 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import TableBody from '@material-ui/core/TableBody'
-import axios from 'axios'
+import Icon from '@material-ui/core/Icon'
 
 import 'react-datepicker/dist/react-datepicker.css'
-
-// CSS Modules, react-datepicker-cssmodules.css
-// import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 export default class Calendar extends React.Component {
   constructor(props) {
@@ -33,7 +30,8 @@ export default class Calendar extends React.Component {
       fillTimes: {}
     }
     this.handleChange = this.handleChange.bind(this)
-    this.handleClick = this.handleClick.bind(this)
+    this.previousWeek = this.previousWeek.bind(this)
+    this.nextWeek = this.nextWeek.bind(this)
     this.goToDate = this.goToDate.bind(this)
   }
 
@@ -49,7 +47,7 @@ export default class Calendar extends React.Component {
     let days = []
 
     while (latestDate.isAfter(dateIterator, 'day') || latestDate.isSame(dateIterator, 'day')) {
-      days.push(moment(dateIterator).format('DD MMM YYYY'))
+      days.push(moment(dateIterator).format('ddd, DD MMM YYYY'))
       dateIterator.add(1, 'day')
     }
 
@@ -60,8 +58,8 @@ export default class Calendar extends React.Component {
           const fillTime = moment.unix(doc.data().fillTime).tz('America/Denver')
           let campgroundFillTime = {}
           campgroundFillTime[doc.data().id] = fillTime.format('hh:mm A')
-          fillTimes[fillTime.format('DD MMM YYYY')] = fillTimes[fillTime.format('DD MMM YYYY')] || {}
-          fillTimes[fillTime.format('DD MMM YYYY')][doc.data().id] = fillTime.format('hh:mm A')
+          fillTimes[fillTime.format('ddd, DD MMM YYYY')] = fillTimes[fillTime.format('ddd, DD MMM YYYY')] || {}
+          fillTimes[fillTime.format('ddd, DD MMM YYYY')][doc.data().id] = fillTime.format('hh:mm A')
         })
         this.setState({
           fillTimes: fillTimes,
@@ -81,23 +79,18 @@ export default class Calendar extends React.Component {
     })
   }
 
-  handleClick() {
-    /*const date1 = moment('2016-06-22T14:50:00Z').unix()
-    const date2 = moment('2016-06-25T14:58:00Z').unix()
-    this.db.collection('test_camp').where('date', '>', date1).where('date', '<', date2)
-      .get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-          console.log(moment.unix(doc.data().date).tz('America/Denver').format('YYYY/MM/DD<br/> HH:mm'))
-        })
-      })
-      .catch(error => {
-        console.error(error)
-      })*/
-    /*console.log(moment('2016-06-20T14:51:00Z').tz('America/Denver').toDate())
-    this.db.collection('test_camp').add({
-      date: moment('2016-06-21T14:51:00Z').unix()
-    })*/
+  previousWeek() {
+    this.setState({
+      startDate: this.state.startDate.subtract(1, 'week')
+    })
+    this.initFillTimes()
+  }
+
+  nextWeek() {
+    this.setState({
+      startDate: this.state.startDate.add(1, 'week')
+    })
+    this.initFillTimes()
   }
 
   goToDate() {
@@ -108,9 +101,6 @@ export default class Calendar extends React.Component {
     const { fillTimes, days } = this.state
     return (
       <div className="calendar container">
-        {/*<div className="row">
-          <span className="btn btn-primary btn-select-date" onClick={this.handleClick}>Test!</span>
-        </div>*/}
         <div className="datepicker row">
           <DatePicker
             selected={this.state.startDate}
@@ -123,7 +113,15 @@ export default class Calendar extends React.Component {
             dropdownMode="select"
             todayButton={'Today'}
           />
-          <Button variant="contained" color="primary" className="btn-select-date" onClick={this.goToDate}>Go to selected date</Button>
+          <Button variant="contained" color="primary" className="btn-datepicker" onClick={this.goToDate}>Go to selected date</Button>
+          <Button variant="contained" color="primary" className="btn-datepicker" onClick={this.previousWeek}>
+            <Icon className="btn-datepicker-icon btn-datepicker-icon-left">arrow_back</Icon>
+            previous week
+          </Button>
+          <Button variant="contained" color="primary" className="btn-datepicker" onClick={this.nextWeek}>
+            next week
+            <Icon className="btn-datepicker-icon btn-datepicker-icon-right">arrow_forward</Icon>
+          </Button>
         </div>
         <div className="row table-container">
           <Table>
@@ -144,11 +142,11 @@ export default class Calendar extends React.Component {
                 Campgrounds.map(campground => {
                   return (
                     <TableRow key={campground.npmap_id}>
-                      <TableCell>{campground.name}</TableCell>
+                      <TableCell key={campground.npmap_id + '_name'}>{campground.name}</TableCell>
                       {
                         days.map(day => {
                           return (
-                            <TableCell>
+                            <TableCell key={campground.npmap_id + day}>
                               {fillTimes[day] && fillTimes[day][campground.npmap_id] ? fillTimes[day][campground.npmap_id] : '-'}
                             </TableCell>
                           )

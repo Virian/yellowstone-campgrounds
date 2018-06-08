@@ -2,14 +2,30 @@
   margin-top: 20px;
 
   .datepicker {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
     margin-bottom: 30px;
+
     > div {
       display: inline-block;
     }
   }
 
-  .btn-select-date {
+  .btn-datepicker {
     margin-left: 10px;
+
+    .btn-datepicker-icon {
+      font-size: 20px;
+    }
+
+    .btn-datepicker-icon-left {
+      margin-right: 5px;
+    }
+
+    .btn-datepicker-icon-right {
+      margin-left: 5px;
+    }
   }
 
   .table-container {

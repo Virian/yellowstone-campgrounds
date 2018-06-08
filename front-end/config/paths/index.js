@@ -1,3 +1,1 @@
-export default {
-	testPath: '/testPath',
-}
+export default {}
