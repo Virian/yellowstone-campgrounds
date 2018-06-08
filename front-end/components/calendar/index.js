@@ -1,6 +1,7 @@
 import React from 'react'
 import DatePicker from 'react-datepicker'
-import * as firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 import FirebaseConfig from '../../config/firebase.config.json'
 import Campgrounds from '../../config/campgrounds.json'
 import moment from 'moment-timezone'
@@ -36,10 +37,10 @@ export default class Calendar extends React.Component {
   }
 
   componentDidMount() {
-    this.initFillTimes()
+    this.getFillTimes()
   }
 
-  initFillTimes() {
+  getFillTimes() {
     const earliestDate = moment(this.state.startDate).startOf('isoWeek').startOf('day')
     const latestDate = moment(this.state.startDate).endOf('isoWeek').endOf('day')
     let dateIterator = moment(earliestDate)
@@ -83,18 +84,18 @@ export default class Calendar extends React.Component {
     this.setState({
       startDate: this.state.startDate.subtract(1, 'week')
     })
-    this.initFillTimes()
+    this.getFillTimes()
   }
 
   nextWeek() {
     this.setState({
       startDate: this.state.startDate.add(1, 'week')
     })
-    this.initFillTimes()
+    this.getFillTimes()
   }
 
   goToDate() {
-    this.initFillTimes()
+    this.getFillTimes()
   }
 
   render() {
