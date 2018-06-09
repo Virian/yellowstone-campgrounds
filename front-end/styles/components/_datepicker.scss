@@ -4,14 +4,93 @@
   padding-left: 20px;
   margin-bottom: 30px;
 
+  @include max-screen(660px) {
+    flex-flow: column nowrap;
+    padding: 0 10px;
+  }
+}
+
+.pick-date {
+  @include max-screen(330px) {
+    flex-flow: column nowrap;
+    display: flex;
+    width: 100%;
+  }
+
   > div {
     display: inline-block;
   }
 }
 
-.btn-datepicker {
+.week-navigation {
+  display: flex;
+
+  @include max-screen($mobile--medium) {
+    display: flex;
+    flex-flow: column wrap;
+    width: 100%;
+  }
+}
+
+.react-datepicker-wrapper {
+  @include max-screen(330px) {
+    width: 100%;
+  }
+
+  .react-datepicker__input-container {
+    @include max-screen(330px) {
+      width: 100%;
+    }
+
+    input {
+      @include min-to-max-screen(661px, $tablet) {
+        width: 100px;
+      }
+      @include min-to-max-screen(331px, $mobile--medium) {
+        width: 100px;
+      }
+      @include max-screen(330px) {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.btn-datepicker-select {
   margin-left: 10px;
 
+  @include max-screen(330px) {
+    margin-top: 10px;
+    margin-left: 0;
+  }
+}
+
+.btn-datepicker-prev {
+  margin-left: 10px;
+
+  @include max-screen(660px) {
+    margin-top: 10px;
+    margin-left: 0;
+  }
+  @include max-screen($mobile--medium) {
+    width: 100%;
+  }
+}
+
+.btn-datepicker-next {
+  margin-left: 10px;
+
+  @include max-screen(660px) {
+    margin-top: 10px;
+  }
+  @include max-screen($mobile--medium) {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+.btn-datepicker {
   .btn-datepicker-icon {
     font-size: 20px;
   }

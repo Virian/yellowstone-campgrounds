@@ -2,6 +2,28 @@
   margin-top: 20px;
 
   .table-container {
-    margin-bottom: 30px;
+    @include min-screen($tablet) {
+      margin-bottom: 30px;
+    }
+
+    .calendar-table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    table {
+      thead {
+        background-color: $color-primary;
+
+        th {
+          color: $color-white;
+        }
+      }
+
+      tr:nth-child(even) {
+        background-color: #eee;
+      }
+    }
   }
 }

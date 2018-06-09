@@ -37,26 +37,30 @@ export default class Calendar extends React.Component {
   render() {
     return (
       <div className="datepicker row">
-        <DatePicker
-          selected={this.props.startDate}
-          onChange={this.handleChange}
-          maxDate={moment().tz('America/Denver')}
-          minDate={moment().year(2015).startOf('year')}
-          locale="en-gb"
-          showMonthDropdown
-          showYearDropdown
-          dropdownMode="select"
-          todayButton={'Today'}
-        />
-        <Button variant="contained" color="primary" className="btn-datepicker" onClick={this.goToDate}>Go to selected date</Button>
-        <Button variant="contained" color="primary" className="btn-datepicker" onClick={this.previousWeek}>
-          <Icon className="btn-datepicker-icon btn-datepicker-icon-left">arrow_back</Icon>
-          previous week
-        </Button>
-        <Button variant="contained" color="primary" className="btn-datepicker" onClick={this.nextWeek}>
-          next week
-          <Icon className="btn-datepicker-icon btn-datepicker-icon-right">arrow_forward</Icon>
-        </Button>
+        <div className="pick-date">
+          <DatePicker
+            selected={this.props.startDate}
+            onChange={this.handleChange}
+            maxDate={moment().tz('America/Denver')}
+            minDate={moment().year(2015).startOf('year')}
+            locale="en-gb"
+            showMonthDropdown
+            showYearDropdown
+            dropdownMode="select"
+            todayButton={'Today'}
+          />
+          <Button variant="contained" color="primary" className="btn-datepicker-select" onClick={this.goToDate}>Go to selected date</Button>
+        </div>
+        <div className="week-navigation">
+          <Button variant="contained" color="primary" className="btn-datepicker btn-datepicker-prev" onClick={this.previousWeek}>
+            <Icon className="btn-datepicker-icon btn-datepicker-icon-left">arrow_back</Icon>
+            previous week
+          </Button>
+          <Button variant="contained" color="primary" className="btn-datepicker btn-datepicker-next" onClick={this.nextWeek}>
+            next week
+            <Icon className="btn-datepicker-icon btn-datepicker-icon-right">arrow_forward</Icon>
+          </Button>
+        </div>
       </div>
     )
   }
